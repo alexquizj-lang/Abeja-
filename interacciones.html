@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABP Grado Noveno - Interacciones Biológicas</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --primary-green: #047857;
+            --light-green: #d1fae5;
+            --primary-blue: #0284c7;
+            --light-blue: #e0f2fe;
+            --border-color: #cbd5e1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .badges-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .badge-secondary {
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #0f172a;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        /* Sistema de Pestañas */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--primary-blue);
+        }
+
+        .card.proyecto h3 {
+            color: var(--primary-green);
+        }
+
+        .info-box {
+            background: #f1f5f9;
+            border-left: 5px solid var(--primary-blue);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .info-box.green {
+            border-left-color: var(--primary-green);
+            background: #f0fdf4;
+        }
+
+        .grid-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .steps-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .steps-list li {
+            padding: 18px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: var(--primary-green);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .ejemplo-detalle {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-blue);
+            color: #334155;
+            line-height: 1.5;
+        }
+
+        .ruta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .ruta-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .ruta-item h4 {
+            margin: 0 0 8px 0;
+            color: var(--primary-green);
+            font-size: 1rem;
+        }
+
+        /* Estilos del Minijuego Arcade Desafiante */
+        .game-container {
+            text-align: center;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        canvas {
+            background: #1e293b;
+            border: 2px solid #38bdf8;
+            border-radius: 8px;
+            display: block;
+            margin: 15px auto;
+            max-width: 100%;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .game-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .game-btn:hover {
+            background: #047857;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="badges-wrapper">
+                <span class="badge">🌿 CIENCIAS NATURALES Y EDUCACIÓN AMBIENTAL</span>
+                <span class="badge badge-secondary">GRADO NOVENO (9.°) • VIRTUAL</span>
+            </div>
+            <h1>Metodología ABP: Interacciones Biológicas</h1>
+            
+            <!-- Botones de Pestañas Separadas -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-home')">📌 Metodología y Reto</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-secuencia')">📈 Secuencia y Ejemplos</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-ruta')">🗺️ Ruta de Trabajo</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-juego')">🎮 Minijuego Ecológico</button>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 1: METODOLOGÍA Y RETO -->
+        <div id="tab-home" class="tab-content active">
+            <div class="info-box green">
+                <strong>🎯 Objetivo de la temática (Grado 9.°):</strong> Explicar cómo las interacciones biológicas (mutualismo, competencia y depredación) estructuran las comunidades y regulan la estabilidad de los ecosistemas[cite: 1, 2].
+            </div>
+            <div class="info-box">
+                <strong>💡 Competencia clave:</strong> Uso comprensivo del conocimiento científico[cite: 1, 2].
+            </div>
+
+            <div class="card">
+                <h3>¿En qué consiste el enfoque ABP?</h3>
+                <p>El grupo aprende al investigar una situación compleja y construir respuestas[cite: 1]. En el <strong>ABP Problemas</strong>, el énfasis está en analizar y resolver un dilema; en el <strong>ABP Proyectos</strong>, en desarrollar un producto o intervención a lo largo de un proceso guiado[cite: 1].</p>
+            </div>
+
+            <div class="grid-section">
+                <div class="card">
+                    <h3>❓ ABP Problema: Investigar para decidir</h3>
+                    <p>Se parte de un problema abierto. El equipo define qué necesita saber, busca fuentes y contrasta explicaciones sobre relaciones ecológicas[cite: 1].</p>
+                    <p><strong>Producto:</strong> Diagnóstico del estado de conservación de una comunidad biológica[cite: 1].</p>
+                </div>
+                <div class="card proyecto">
+                    <h3>🛠️ ABP Proyectos: Crear para responder</h3>
+                    <p>Se parte de un reto que conduce a planificar, producir y presentar una solución interactiva con criterios de calidad[cite: 1].</p>
+                    <p><strong>Producto:</strong> Campaña virtual o simulador de impacto de especies invasoras[cite: 1].</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 2: SECUENCIA Y EJEMPLOS DETALLADOS -->
+        <div id="tab-secuencia" class="tab-content">
+            <div class="card">
+                <h3>📈 Secuencia del Proyecto y Ejemplos Detallados de Grado 9.°</h3>
+                <ul class="steps-list">
+                    <li>
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Presentar el reto:</strong> Situación auténtica y abierta sobre dinámicas de ecosistemas[cite: 2].
+                            <div class="ejemplo-tag ejemplo-detalle">
+                                <strong>Ejemplo aplicado:</strong> <em>Plantear el caso de la introducción de una especie competidora exótica en un bosque andino que amenaza a los polinizadores nativos, exigiendo a los estudiantes diseñar una estrategia digital de mitigación.</em>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>Investigar y distribuir roles:</strong> Curador de fuentes, analista ecológico, diseñador, relator[cite: 2].
+                            <div class="ejemplo-tag ejemplo-detalle">
+                                <strong>Ejemplo aplicado:</strong> <em>En las salas virtuales del curso, el analista recopila datos sobre tasas de natalidad y competencia por recursos, mientras el diseñador estructura la campaña web.</em>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Construir una respuesta común:</strong> Documento compartido, tablero web o prototipo[cite: 2].
+                            <div class="ejemplo-tag ejemplo-detalle">
+                                <strong>Ejemplo aplicado:</strong> <em>El equipo co-crea un infográfico interactivo donde explican gráficamente las curvas de competencia interespecífica y la pérdida de mutualismo.</em>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="step-number">4</div>
+                        <div>
+                            <strong>Presentar y revisar:</strong> Demostración en línea y retroalimentación de pares[cite: 2].
+                            <div class="ejemplo-tag ejemplo-detalle">
+                                <strong>Ejemplo aplicado:</strong> <em>Publicación del infográfico en el foro virtual del grado 9.° para evaluar mediante rúbrica la solidez de los argumentos ecológicos apresentados.</em>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 3: RUTA DE TRABAJO -->
+        <div id="tab-ruta" class="tab-content">
+            <div class="card">
+                <h3>🗺️ Ruta Sencilla de Trabajo Virtual y Ejemplos de Aplicación</h3>
+                <div class="ruta-grid">
+                    <div class="ruta-item">
+                        <h4>💬 Foro de Investigación</h4>
+                        <p><strong>Qué es:</strong> Espacio asincrónico de debate[cite: 2].<br><em>Ejemplo:</em> Discutir por qué el mutualismo planta-insecto es vital frente al cambio climático.</p>
+                    </div>
+                    <div class="ruta-item">
+                        <h4>📋 Tablero Kanban</h4>
+                        <p><strong>Qué es:</strong> Organización visual de tareas[cite: 2].<br><em>Ejemplo:</em> Mover tarjetas digitales de "Pendiente", "Investigando" y "Listo".</p>
+                    </div>
+                    <div class="ruta-item">
+                        <h4>☁️ Portafolio Grupal</h4>
+                        <p><strong>Qué es:</strong> Repositorio en la nube[cite: 2].<br><em>Ejemplo:</em> Carpeta compartida con borradores de la campaña ambiental.</p>
+                    </div>
+                    <div class="ruta-item">
+                        <h4>⭐ Evaluación Formativa</h4>
+                        <p><strong>Qué es:</strong> Criterios de calidad explícitos[cite: 2].<br><em>Ejemplo:</em> Rúbrica de uso de evidencia científica y co-evaluación.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 4: MINIJUEGO DESAFIANTE -->
+        <div id="tab-juego" class="tab-content">
+            <div class="card game-container">
+                <h3>🐝 Supervivencia en el Ecosistema (Nivel Grado 9.°)</h3>
+                <p>Controla a la abeja con las <strong>flechas ARRIBA / ABAJO</strong>. Recolecta flores amarillas <strong>(Mutualismo)</strong>, compite contra avispas rivales amarillas oscuras <strong>(Competencia)</strong> y huye de los pájaros depredadores grises <strong>(Depredación)</strong>.</p>
+                
+                <div class="game-stats">
+                    <div>Nivel: <span id="level">1</span></div>
+                    <div>Puntos: <span id="score">0</span></div>
+                    <div>Vidas: <span id="lives">3</span></div>
+                </div>
+
+                <canvas id="gameCanvas" width="480" height="260"></canvas>
+                <button class="game-btn" onclick="startGame()">Iniciar / Reiniciar Desafío</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de Pestañas
+        function switchTab(evt, tabName) {
+            let contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("active");
+            }
+            let buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Lógica del Minijuego Desafiante de Interacciones Biológicas
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let beeY = 130;
+        let score = 0;
+        let lives = 3;
+        let level = 1;
+        let gameInterval;
+        let isPlaying = false;
+
+        // Elementos del juego
+        let items = [];
+
+        document.addEventListener("keydown", function(e) {
+            if (!isPlaying) return;
+            if (e.code === "ArrowUp") beeY -= 25;
+            if (e.code === "ArrowDown") beeY += 25;
+            if (beeY < 15) beeY = 15;
+            if (beeY > 245) beeY = 245;
+        });
+
+        canvas.addEventListener("click", function() {
+            if (!isPlaying) return;
+            beeY -= 35;
+            if (beeY < 15) beeY = 15;
+            if (beeY > 245) beeY = 245;
+        });
+
+        function startGame() {
+            score = 0;
+            lives = 3;
+            level = 1;
+            beeY = 130;
+            isPlaying = true;
+            items = [];
+            spawnItems();
+            document.getElementById("score").innerText = score;
+            document.getElementById("lives").innerText = lives;
+            document.getElementById("level").innerText = level;
+            clearInterval(gameInterval);
+            gameInterval = setInterval(updateGame, 30);
+        }
+
+        function spawnItems() {
+            // Crear elementos aleatorios de mutualismo, competencia y depredación
+            items = [];
+            for (let i = 0; i < 4; i++) {
+                let typeRand = Math.random();
+                let type = "pollen"; // Mutualismo (+/+)
+                if (typeRand > 0.4 && typeRand <= 0.7) type = "competitor"; // Competencia (-/-)
+                if (typeRand > 0.7) type = "predator"; // Depredación (+/-)
+
+                items.push({
+                    x: 500 + i * 140,
+                    y: Math.random() * 200 + 30,
+                    type: type,
+                    speed: 3 + level * 0.8
+                });
+            }
+        }
+
+        function updateGame() {
+            if (!isPlaying) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Dibujar línea de suelo o fondo ecológico
+            ctx.fillStyle = "#334155";
+            ctx.fillRect(0, 245, canvas.width, 15);
+
+            // Dibujar Abeja Jugador
+            ctx.font = "26px Arial";
+            ctx.fillText("🐝", 40, beeY);
+
+            // Actualizar y dibujar elementos
+            for (let i = 0; i < items.length; i++) {
+                let obj = items[i];
+                obj.x -= obj.speed;
+
+                // Representar gráficos según interacción biológica
+                if (obj.type === "pollen") {
+                    ctx.fillStyle = "#facc15"; // Flor / Polen (+/+)
+                    ctx.beginPath();
+                    ctx.arc(obj.x, obj.y, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = "#000";
+                    ctx.font = "10px Arial";
+                    ctx.fillText("Polen", obj.x - 12, obj.y - 12);
+                } else if (obj.type === "competitor") {
+                    ctx.fillText("🦟", obj.x, obj.y); // Avispa Competidora (-/-)
+                } else if (obj.type === "predator") {
+                    ctx.fillText("🕷️", obj.x, obj.y); // Depredador (+/-)
+                }
+
+                // Colisiones
+                let distX = Math.abs(40 - obj.x);
+                let distY = Math.abs(beeY - obj.y);
+
+                if (distX < 20 && distY < 20) {
+                    if (obj.type === "pollen") {
+                        score += 15;
+                        // Subir de nivel cada 50 puntos
+                        if (score >= level * 50) {
+                            level++;
+                            document.getElementById("level").innerText = level;
+                        }
+                    } else if (obj.type === "competitor" || obj.type === "predator") {
+                        lives--;
+                        if (lives <= 0) {
+                            isPlaying = false;
+                            alert("¡Game Over! El ecosistema colapsó. Puntuación final: " + score);
+                        }
+                    }
+                    // Reciclar elemento colisionado
+                    obj.x = 500 + Math.random() * 100;
+                    obj.y = Math.random() * 200 + 30;
+                }
+
+                // Reciclar si sale de pantalla
+                if (obj.x < -20) {
+                    obj.x = 500 + Math.random() * 100;
+                    obj.y = Math.random() * 200 + 30;
+                    let r = Math.random();
+                    if (r < 0.4) obj.type = "pollen";
+                    else if (r < 0.7) obj.type = "competitor";
+                    else obj.type = "predator";
+                }
+            }
+
+            document.getElementById("score").innerText = score;
+            document.getElementById("lives").innerText = lives;
+        }
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABP Grado Noveno - Interacciones Biológicas</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --primary-green: #047857;
+            --light-green: #d1fae5;
+            --primary-blue: #0284c7;
+            --light-blue: #e0f2fe;
+            --border-color: #cbd5e1;
+            --amber: #b45309;
+            --light-amber: #fef3c7;
+            --red: #b91c1c;
+            --light-red: #fee2e2;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .badges-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .badge-secondary {
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #0f172a;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        /* Sistema de Pestañas */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--primary-blue);
+        }
+
+        .card.proyecto h3 {
+            color: var(--primary-green);
+        }
+
+        .info-box {
+            background: #f1f5f9;
+            border-left: 5px solid var(--primary-blue);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .info-box.green {
+            border-left-color: var(--primary-green);
+            background: #f0fdf4;
+        }
+
+        .info-box.amber {
+            border-left-color: var(--amber);
+            background: #fffbeb;
+        }
+
+        .grid-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-section, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Secuencia */
+        .step {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: var(--primary-green);
+            color: white;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .step-body h3 {
+            margin-bottom: 4px;
+        }
+
+        .step-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .label.que { background: var(--light-blue); color: var(--primary-blue); }
+        .label.como { background: var(--light-amber); color: var(--amber); }
+        .label.hecho { background: var(--light-green); color: var(--primary-green); }
+
+        .how-list {
+            margin: 0 0 15px 0;
+            padding-left: 20px;
+            font-size: 0.93rem;
+            color: #334155;
+        }
+
+        .how-list li {
+            margin-bottom: 4px;
+        }
+
+        /* Maquetas de ejemplo hecho */
+        .mock {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-size: 0.92rem;
+            color: #334155;
+        }
+
+        .mock + .mock {
+            margin-top: 12px;
+        }
+
+        .mock-title {
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0 0 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .mock-bar {
+            background: #e2e8f0;
+            margin: -16px -18px 14px -18px;
+            padding: 8px 14px;
+            border-radius: 10px 10px 0 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            background: white;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid var(--border-color);
+            padding: 7px 9px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .data-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        .sign {
+            display: inline-block;
+            font-weight: 800;
+            padding: 1px 7px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .sign.mut { background: var(--light-green); color: var(--primary-green); }
+        .sign.comp { background: var(--light-amber); color: var(--amber); }
+        .sign.dep { background: var(--light-red); color: var(--red); }
+
+        .info-panel {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            border-top: 5px solid var(--primary-green);
+        }
+
+        .info-panel.comp { border-top-color: var(--amber); }
+        .info-panel.dep { border-top-color: var(--red); }
+
+        .info-panel h5 {
+            margin: 0 0 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .info-panel p {
+            margin: 0;
+            font-size: 0.85rem;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            margin: 4px 0;
+        }
+
+        .bar-row span:first-child {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .bar {
+            height: 14px;
+            border-radius: 3px;
+            background: var(--primary-green);
+        }
+
+        .bar.exo { background: var(--amber); }
+
+        .feedback {
+            background: white;
+            border-radius: 8px;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 8px;
+        }
+
+        /* Ruta */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline { grid-template-columns: 1fr 1fr; }
+        }
+
+        .week {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.85rem;
+        }
+
+        .week strong {
+            display: block;
+            color: var(--primary-green);
+            margin-bottom: 4px;
+        }
+
+        .forum-post {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-top: 8px;
+        }
+
+        .forum-post.reply {
+            margin-left: 28px;
+            border-left: 3px solid var(--primary-blue);
+        }
+
+        .forum-author {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #0f172a;
+        }
+
+        .forum-author small {
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .kanban {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .kanban { grid-template-columns: 1fr 1fr; }
+        }
+
+        .kanban-col {
+            background: #e2e8f0;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .kanban-col h6 {
+            margin: 0 0 8px 0;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .kanban-card {
+            background: white;
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .kanban-card.c2 { border-left-color: var(--primary-green); }
+        .kanban-card.c3 { border-left-color: var(--amber); }
+        .kanban-card.c4 { border-left-color: #7c3aed; }
+
+        .kanban-card small {
+            display: block;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .folder-tree {
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 0.85rem;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 14px 16px;
+            border-radius: 8px;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .folder-tree .note {
+            color: #86efac;
+        }
+
+        /* Minijuego */
+        .game-container {
+            text-align: center;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .game-container h3 {
+            color: #7dd3fc !important;
+        }
+
+        .game-container p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .game-stage {
+            position: relative;
+            max-width: 720px;
+            margin: 12px auto;
+        }
+
+        canvas {
+            background: #1e293b;
+            border: 2px solid #38bdf8;
+            border-radius: 8px;
+            display: block;
+            width: 100%;
+            height: auto;
+            touch-action: none;
+            user-select: none;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.86);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+        }
+
+        .overlay.hidden {
+            display: none;
+        }
+
+        .overlay-box {
+            max-width: 520px;
+            max-height: 100%;
+            overflow-y: auto;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        .overlay-box h4 {
+            margin: 0 0 8px 0;
+            font-size: 1.3rem;
+            color: #fde047;
+            text-align: center;
+        }
+
+        .overlay-box p {
+            margin: 6px 0;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .overlay-box ul {
+            margin: 6px 0;
+            padding-left: 20px;
+        }
+
+        .ov-fact {
+            background: rgba(56, 189, 248, 0.12);
+            border-left: 3px solid #38bdf8;
+            padding: 8px 10px;
+            border-radius: 0 6px 6px 0;
+            margin-top: 8px;
+        }
+
+        .ov-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .energy-track {
+            display: inline-block;
+            width: 80px;
+            height: 10px;
+            background: #334155;
+            border-radius: 5px;
+            vertical-align: middle;
+            overflow: hidden;
+        }
+
+        .energy-fill {
+            height: 100%;
+            background: #4ade80;
+            width: 100%;
+        }
+
+        .eco-stats {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        .eco-stats div {
+            background: #1e293b;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: left;
+            margin: 14px auto 0;
+            max-width: 720px;
+            font-size: 0.82rem;
+        }
+
+        @media (max-width: 768px) {
+            .legend { grid-template-columns: 1fr; }
+        }
+
+        .legend div {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 10px;
+            color: #cbd5e1;
+        }
+
+        .legend strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .game-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 11px 22px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .game-btn:hover {
+            background: #047857;
+        }
+
+        .game-btn.secondary {
+            background: #334155;
+        }
+
+        .game-btn.secondary:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="badges-wrapper">
+                <span class="badge">🌿 CIENCIAS NATURALES Y EDUCACIÓN AMBIENTAL</span>
+                <span class="badge badge-secondary">GRADO NOVENO (9.°) • VIRTUAL</span>
+            </div>
+            <h1>Metodología ABP: Interacciones Biológicas</h1>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-home')">📌 Metodología y Reto</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-secuencia')">📈 Secuencia y Ejemplos</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-ruta')">🗺️ Ruta de Trabajo</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-juego')">🎮 Minijuego Ecológico</button>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 1: METODOLOGÍA Y RETO -->
+        <div id="tab-home" class="tab-content active">
+            <div class="info-box green">
+                <strong>🎯 Objetivo de la temática (Grado 9.°):</strong> Explicar cómo las interacciones biológicas (mutualismo, competencia y depredación) estructuran las comunidades y regulan la estabilidad de los ecosistemas.
+            </div>
+            <div class="info-box">
+                <strong>💡 Competencia clave:</strong> Uso comprensivo del conocimiento científico.
+            </div>
+
+            <div class="card">
+                <h3>¿En qué consiste el enfoque ABP?</h3>
+                <p>El grupo aprende al investigar una situación compleja y construir respuestas. En el <strong>ABP Problemas</strong>, el énfasis está en analizar y resolver un dilema; en el <strong>ABP Proyectos</strong>, en desarrollar un producto o intervención a lo largo de un proceso guiado.</p>
+            </div>
+
+            <div class="grid-section">
+                <div class="card">
+                    <h3>❓ ABP Problema: Investigar para decidir</h3>
+                    <p>Se parte de un problema abierto. El equipo define qué necesita saber, busca fuentes y contrasta explicaciones sobre relaciones ecológicas.</p>
+                    <p><strong>Producto:</strong> Diagnóstico del estado de conservación de una comunidad biológica.</p>
+                </div>
+                <div class="card proyecto">
+                    <h3>🛠️ ABP Proyectos: Crear para responder</h3>
+                    <p>Se parte de un reto que conduce a planificar, producir y presentar una solución interactiva con criterios de calidad.</p>
+                    <p><strong>Producto:</strong> Campaña virtual o simulador de impacto de especies invasoras.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🔁 Las tres interacciones que trabajamos</h3>
+                <div class="grid-3">
+                    <div class="info-panel">
+                        <h5><span class="sign mut">+ / +</span> Mutualismo</h5>
+                        <p>Ambas especies se benefician. La abeja obtiene néctar y polen; la planta logra ser polinizada y formar frutos y semillas.</p>
+                    </div>
+                    <div class="info-panel comp">
+                        <h5><span class="sign comp">− / −</span> Competencia</h5>
+                        <p>Dos especies usan el mismo recurso limitado. Si un abejorro exótico agota las flores, la abeja nativa recolecta menos.</p>
+                    </div>
+                    <div class="info-panel dep">
+                        <h5><span class="sign dep">+ / −</span> Depredación</h5>
+                        <p>Una especie se alimenta de otra. Aves insectívoras, arañas y mantis cazan abejas y regulan su población.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 2: SECUENCIA Y EJEMPLOS HECHOS -->
+        <div id="tab-secuencia" class="tab-content">
+            <div class="info-box green">
+                <strong>📚 Caso que recorre toda la secuencia:</strong> “¿Quién poliniza el bosque?”. En una vereda cercana a un bosque andino, un vivero de tomate trajo colmenas de un <strong>abejorro exótico</strong> para polinizar sus invernaderos. Algunos escaparon y ahora visitan las flores silvestres. Cada paso muestra un <strong>ejemplo ya hecho</strong> de lo que produce el grupo, para que se vea exactamente cómo se realiza.
+            </div>
+
+            <!-- PASO 1 -->
+            <div class="card">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-body">
+                        <h3>Presentar el reto</h3>
+                        <div class="step-meta">Duración sugerida: 1 sesión sincrónica (45 min) • Responsable: docente</div>
+
+                        <span class="label que">Qué dice</span>
+                        <p>Se plantea una situación auténtica y abierta sobre las dinámicas del ecosistema, con una pregunta que no tenga una sola respuesta correcta y un producto final claro.</p>
+
+                        <span class="label como">Cómo se hace</span>
+                        <ol class="how-list">
+                            <li>Escoger un caso real o verosímil de la región que involucre las tres interacciones.</li>
+                            <li>Redactar una ficha del reto: contexto, pregunta guía, producto esperado y fechas.</li>
+                            <li>Mostrar un detonante (foto, video corto o noticia) y pedir preguntas iniciales.</li>
+                            <li>Registrar en un muro lo que el grupo <em>ya sabe</em> y lo que <em>necesita saber</em>.</li>
+                        </ol>
+
+                        <span class="label hecho">Ejemplo hecho</span>
+                        <div class="mock">
+                            <div class="mock-bar">📄 Ficha del reto publicada en el aula virtual</div>
+                            <p class="mock-title">Reto: “¿Quién poliniza el bosque?”</p>
+                            <p><strong>Contexto:</strong> Desde hace dos años los campesinos de la vereda El Roble ven menos abejas nativas y más abejorros grandes de franjas naranjas. Las moras silvestres y los agraz están dando menos frutos.</p>
+                            <p><strong>Pregunta guía:</strong> ¿Cómo está afectando la llegada del abejorro exótico las relaciones de mutualismo, competencia y depredación del bosque, y qué podemos proponer para proteger a los polinizadores nativos?</p>
+                            <p><strong>Producto final:</strong> Infografía interactiva + campaña de 3 publicaciones para la comunidad de la vereda.</p>
+                            <p><strong>Entrega:</strong> Semana 4.</p>
+                        </div>
+                        <div class="mock">
+                            <div class="mock-bar">🧱 Muro colaborativo “Sabemos / Necesitamos saber” (respuestas del grupo)</div>
+                            <div class="table-wrap">
+                                <table class="data-table">
+                                    <tr><th>Lo que ya sabemos</th><th>Lo que necesitamos saber</th></tr>
+                                    <tr><td>Las abejas polinizan las flores y así se forman los frutos.</td><td>¿El abejorro exótico come lo mismo que la abeja nativa?</td></tr>
+                                    <tr><td>Una especie invasora llega de otro lugar.</td><td>¿Tiene depredadores aquí o nadie se lo come?</td></tr>
+                                    <tr><td>Si hay menos flores, hay menos alimento.</td><td>¿Cómo podemos medir cuántas abejas visitan una planta?</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASO 2 -->
+            <div class="card">
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-body">
+                        <h3>Investigar y distribuir roles</h3>
+                        <div class="step-meta">Duración sugerida: 2 sesiones + trabajo asincrónico • Responsables: equipos de 4</div>
+
+                        <span class="label que">Qué dice</span>
+                        <p>Cada integrante asume un rol: curador de fuentes, analista ecológico, diseñador y relator. El equipo investiga con fuentes confiables y con datos propios o de un estudio.</p>
+
+                        <span class="label como">Cómo se hace</span>
+                        <ol class="how-list">
+                            <li>Asignar los roles en la primera reunión y escribir qué entrega cada uno y cuándo.</li>
+                            <li>El curador busca y registra mínimo 3 fuentes confiables con su idea principal.</li>
+                            <li>El analista organiza datos en una tabla y calcula comparaciones simples (diferencias, porcentajes).</li>
+                            <li>El diseñador prepara el boceto del producto; el relator lleva el acta de cada reunión.</li>
+                        </ol>
+
+                        <span class="label hecho">Ejemplo hecho</span>
+                        <div class="mock">
+                            <div class="mock-bar">👥 Tabla de roles del Equipo 3</div>
+                            <div class="table-wrap">
+                                <table class="data-table">
+                                    <tr><th>Rol</th><th>Estudiante</th><th>Tarea concreta</th><th>Entrega</th></tr>
+                                    <tr><td>📚 Curador de fuentes</td><td>Valentina R.</td><td>Buscar artículos sobre abejorros invasores en Sudamérica y polinizadores andinos.</td><td>Ficha de 3 fuentes – martes</td></tr>
+                                    <tr><td>🔬 Analista ecológico</td><td>Samuel G.</td><td>Organizar el conteo de visitas florales y comparar parcelas.</td><td>Tabla + conclusión – jueves</td></tr>
+                                    <tr><td>🎨 Diseñador</td><td>Mariana L.</td><td>Boceto de la infografía con los signos (+/+), (−/−), (+/−).</td><td>Boceto – viernes</td></tr>
+                                    <tr><td>📝 Relator</td><td>Juan D.</td><td>Acta de reuniones y presentación oral final.</td><td>Acta semanal</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mock">
+                            <div class="mock-bar">📚 Ficha de fuente hecha por la curadora</div>
+                            <p><strong>Fuente 1:</strong> Artículo de divulgación sobre la invasión del abejorro europeo en el sur del continente.</p>
+                            <p><strong>Idea principal:</strong> El abejorro exótico es más grande y forma colonias numerosas; acapara las flores y desplaza a abejorros nativos que antes eran comunes.</p>
+                            <p><strong>¿Por qué es confiable?</strong> Cita investigaciones de universidades y tiene fecha y autor.</p>
+                            <p><strong>Interacción que explica:</strong> <span class="sign comp">− / −</span> Competencia por néctar y polen.</p>
+                        </div>
+                        <div class="mock">
+                            <div class="mock-bar">🔬 Datos organizados por el analista: visitas a flores de mora silvestre en 20 minutos</div>
+                            <div class="table-wrap">
+                                <table class="data-table">
+                                    <tr><th>Visitante floral</th><th>Parcela A (sin exótico)</th><th>Parcela B (con exótico)</th></tr>
+                                    <tr><td>Abejorro nativo</td><td>34</td><td>11</td></tr>
+                                    <tr><td>Abeja sin aguijón</td><td>21</td><td>9</td></tr>
+                                    <tr><td>Moscas de las flores</td><td>12</td><td>10</td></tr>
+                                    <tr><td>Abejorro exótico</td><td>0</td><td>46</td></tr>
+                                    <tr><th>% de flores que formaron fruto</th><th>78 %</th><th>52 %</th></tr>
+                                </table>
+                            </div>
+                            <p><strong>Cálculo:</strong> las visitas de abejorro nativo bajaron de 34 a 11, es decir 23 visitas menos (≈ 68 % menos).</p>
+                            <p><strong>Conclusión del analista:</strong> donde está el exótico hay más visitas en total, pero menos frutos. Esto sugiere que compite con los nativos y que no poliniza igual de bien a la mora (muchas veces perfora la flor y “roba” el néctar sin tocar el polen).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASO 3 -->
+            <div class="card">
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-body">
+                        <h3>Construir una respuesta común</h3>
+                        <div class="step-meta">Duración sugerida: 1 semana • Herramientas: documento compartido, tablero web o prototipo</div>
+
+                        <span class="label que">Qué dice</span>
+                        <p>El equipo integra lo investigado en un solo producto que responda la pregunta guía con evidencias y una propuesta de acción.</p>
+
+                        <span class="label como">Cómo se hace</span>
+                        <ol class="how-list">
+                            <li>Escribir entre todos una respuesta de 3–4 líneas a la pregunta guía.</li>
+                            <li>Ubicar cada interacción con su signo y un dato que la respalde.</li>
+                            <li>Agregar una gráfica sencilla con los datos del analista.</li>
+                            <li>Cerrar con una propuesta realista que la comunidad pueda aplicar.</li>
+                        </ol>
+
+                        <span class="label hecho">Ejemplo hecho</span>
+                        <div class="mock">
+                            <div class="mock-bar">🖼️ Infografía final del Equipo 3 (versión web)</div>
+                            <p class="mock-title" style="text-align:center;">🐝 ¿Quién poliniza el bosque de El Roble?</p>
+                            <div class="grid-3">
+                                <div class="info-panel">
+                                    <h5><span class="sign mut">+ / +</span> Mutualismo en riesgo</h5>
+                                    <p>Abeja nativa ↔ mora silvestre. La abeja recibe néctar y la planta forma frutos. Con menos visitas nativas, los frutos bajaron de 78 % a 52 %.</p>
+                                </div>
+                                <div class="info-panel comp">
+                                    <h5><span class="sign comp">− / −</span> Competencia</h5>
+                                    <p>Abejorro exótico vs. nativos por el mismo néctar. El exótico hizo 46 de 76 visitas en la parcela B y desplazó a los nativos.</p>
+                                </div>
+                                <div class="info-panel dep">
+                                    <h5><span class="sign dep">+ / −</span> Depredación</h5>
+                                    <p>Aves insectívoras y arañas cangrejo cazan abejas. Al haber más abejorros, algunos depredadores tienen más presas, pero no alcanzan a controlarlos.</p>
+                                </div>
+                            </div>
+                            <div style="margin-top:12px;">
+                                <strong style="font-size:0.85rem;">Visitas de abejorro nativo (20 min)</strong>
+                                <div class="bar-row"><span>Parcela A</span><div class="bar" style="width:68%"></div><span>34</span></div>
+                                <div class="bar-row"><span>Parcela B</span><div class="bar" style="width:22%"></div><span>11</span></div>
+                                <div class="bar-row"><span>Exótico en B</span><div class="bar exo" style="width:92%"></div><span>46</span></div>
+                            </div>
+                            <p style="margin-top:10px;"><strong>Nuestra respuesta:</strong> El abejorro exótico compite con las abejas nativas por el néctar y las desplaza. Como poliniza peor la mora, se debilita el mutualismo nativo y las plantas dan menos frutos. Sus depredadores locales no lo controlan lo suficiente.</p>
+                            <p><strong>Propuesta:</strong> 1) Sembrar franjas de flores nativas cerca del bosque. 2) Pedir al vivero mallas en los invernaderos para que no escapen más abejorros. 3) Hacer un conteo comunitario de abejas cada mes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASO 4 -->
+            <div class="card">
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-body">
+                        <h3>Presentar y revisar</h3>
+                        <div class="step-meta">Duración sugerida: 1 sesión sincrónica + 2 días de ajustes • Responsables: todo el grado</div>
+
+                        <span class="label que">Qué dice</span>
+                        <p>Los equipos presentan en línea, reciben retroalimentación de sus pares con una rúbrica y mejoran su producto antes de publicarlo.</p>
+
+                        <span class="label como">Cómo se hace</span>
+                        <ol class="how-list">
+                            <li>Cada equipo presenta 5 minutos (el relator dirige) y responde 2 preguntas.</li>
+                            <li>Otro equipo evalúa con la rúbrica y deja comentarios con la técnica “2 estrellas y 1 deseo”.</li>
+                            <li>El equipo ajusta su producto según el comentario y registra qué cambió.</li>
+                            <li>Se publica la versión final en el foro del grado y se comparte con la comunidad.</li>
+                        </ol>
+
+                        <span class="label hecho">Ejemplo hecho</span>
+                        <div class="mock">
+                            <div class="mock-bar">⭐ Coevaluación que el Equipo 1 hizo al Equipo 3</div>
+                            <div class="feedback">⭐ <strong>Estrella 1:</strong> Usan bien los signos (+/+), (−/−) y (+/−) y cada uno tiene un dato.</div>
+                            <div class="feedback">⭐ <strong>Estrella 2:</strong> La gráfica de barras deja ver muy claro cómo bajaron las visitas nativas.</div>
+                            <div class="feedback">💭 <strong>Deseo:</strong> En depredación no muestran ningún dato propio. ¿Podrían contar cuántas arañas cangrejo encontraron en las flores?</div>
+                        </div>
+                        <div class="mock">
+                            <div class="mock-bar">🔧 Registro de mejora del Equipo 3</div>
+                            <p><strong>Cambio realizado:</strong> Hicimos un nuevo recorrido y contamos 7 arañas cangrejo en 50 flores de la parcela A y 3 en la parcela B. Lo agregamos al panel de depredación.</p>
+                            <p><strong>Lo que aprendimos:</strong> La depredación también regula a los polinizadores, pero no basta para frenar a una especie invasora que llega en grandes cantidades.</p>
+                            <p><strong>Calificación en la rúbrica:</strong> Evidencia científica: 4/4 • Explicación de interacciones: 4/4 • Propuesta: 3/4 • Comunicación: 4/4.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 3: RUTA DE TRABAJO -->
+        <div id="tab-ruta" class="tab-content">
+            <div class="card">
+                <h3>🗺️ Ruta de Trabajo Virtual</h3>
+                <p>La ruta organiza las herramientas virtuales que el grupo usa durante las 4 semanas. En cada herramienta verás <strong>qué es</strong>, <strong>cómo se hace</strong> paso a paso y un <strong>ejemplo ya hecho</strong>.</p>
+                <div class="timeline">
+                    <div class="week"><strong>Semana 1</strong>Reto presentado, roles asignados y primer debate en el foro.</div>
+                    <div class="week"><strong>Semana 2</strong>Investigación y datos. Tareas en el Kanban y fuentes en el portafolio.</div>
+                    <div class="week"><strong>Semana 3</strong>Construcción de la infografía y la campaña.</div>
+                    <div class="week"><strong>Semana 4</strong>Presentación, coevaluación con rúbrica y versión final.</div>
+                </div>
+            </div>
+
+            <!-- FORO -->
+            <div class="card">
+                <h3>💬 1. Foro de Investigación</h3>
+                <span class="label que">Qué es</span>
+                <p>Un espacio asincrónico donde cada estudiante publica una idea con evidencia y responde a sus compañeros. Sirve para debatir antes de construir el producto.</p>
+
+                <span class="label como">Cómo se hace</span>
+                <ol class="how-list">
+                    <li>El docente abre un hilo con una pregunta de debate.</li>
+                    <li>Cada estudiante publica su postura en máximo 5 líneas e incluye <strong>una fuente o dato</strong>.</li>
+                    <li>Cada estudiante responde a <strong>dos compañeros</strong>: uno para apoyar y otro para cuestionar con respeto.</li>
+                    <li>Al cierre, el relator de cada equipo resume las ideas más fuertes.</li>
+                </ol>
+
+                <span class="label hecho">Ejemplo hecho</span>
+                <div class="mock">
+                    <div class="mock-bar">💬 Foro 9.° • Hilo: “¿Por qué el mutualismo planta–insecto es vital frente al cambio climático?”</div>
+                    <div class="forum-post">
+                        <div class="forum-author">Valentina R. <small>• Equipo 3 • lunes 10:14</small></div>
+                        Creo que es vital porque con el calor algunas plantas florecen antes y, si las abejas no salen al mismo tiempo, no hay polinización. Leí que esto se llama “desfase fenológico”. Sin el mutualismo (+/+) la planta no forma semillas y la abeja se queda sin alimento.
+                    </div>
+                    <div class="forum-post reply">
+                        <div class="forum-author">Samuel G. <small>• responde • lunes 16:40</small></div>
+                        Estoy de acuerdo. En nuestro conteo, la parcela con menos abejas nativas tuvo 26 % menos frutos. Eso muestra que cuando el mutualismo falla, la planta pierde.
+                    </div>
+                    <div class="forum-post reply">
+                        <div class="forum-author">Laura M. <small>• Equipo 1 • martes 08:05</small></div>
+                        Buena idea, pero ¿no pasaría lo mismo si llega otra abeja que también poliniza? Tal vez el problema no es solo el clima sino la competencia (−/−) con especies nuevas.
+                    </div>
+                    <div class="forum-post" style="border-left:3px solid var(--primary-green);">
+                        <div class="forum-author">📝 Resumen del relator <small>• Equipo 3</small></div>
+                        Concluimos que el mutualismo es vital porque sostiene la reproducción de las plantas y el alimento de las abejas, y que se debilita tanto por el cambio climático como por la competencia con especies invasoras.
+                    </div>
+                </div>
+            </div>
+
+            <!-- KANBAN -->
+            <div class="card">
+                <h3>📋 2. Tablero Kanban</h3>
+                <span class="label que">Qué es</span>
+                <p>Un tablero visual con columnas para organizar las tareas del equipo. Cada tarjeta es una tarea con responsable y fecha, y se mueve de izquierda a derecha según avanza.</p>
+
+                <span class="label como">Cómo se hace</span>
+                <ol class="how-list">
+                    <li>Crear un tablero (Trello, Padlet, Miro o una tabla en un documento) con las columnas <em>Pendiente, Investigando, En revisión y Listo</em>.</li>
+                    <li>Escribir cada tarea en una tarjeta con: qué hay que hacer, quién la hace y para cuándo.</li>
+                    <li>Usar un color por rol para ver rápidamente quién tiene más carga.</li>
+                    <li>Al inicio de cada sesión, cada integrante mueve sus tarjetas y comenta qué le falta.</li>
+                </ol>
+
+                <span class="label hecho">Ejemplo hecho</span>
+                <div class="mock">
+                    <div class="mock-bar">📋 Kanban del Equipo 3 • Semana 2 (miércoles)</div>
+                    <div class="kanban">
+                        <div class="kanban-col">
+                            <h6>Pendiente</h6>
+                            <div class="kanban-card c3">Boceto de la infografía<small>🎨 Mariana • vie</small></div>
+                            <div class="kanban-card c4">Guion de la presentación<small>📝 Juan • sem 4</small></div>
+                        </div>
+                        <div class="kanban-col">
+                            <h6>Investigando</h6>
+                            <div class="kanban-card c2">Comparar parcelas A y B<small>🔬 Samuel • jue</small></div>
+                            <div class="kanban-card">Fuente 3: depredadores de abejas<small>📚 Valentina • jue</small></div>
+                        </div>
+                        <div class="kanban-col">
+                            <h6>En revisión</h6>
+                            <div class="kanban-card">Fichas de fuentes 1 y 2<small>📚 Valentina • revisa Samuel</small></div>
+                        </div>
+                        <div class="kanban-col">
+                            <h6>Listo ✅</h6>
+                            <div class="kanban-card c4">Acta reunión 1<small>📝 Juan</small></div>
+                            <div class="kanban-card c2">Tabla de conteo de visitas<small>🔬 Samuel</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PORTAFOLIO -->
+            <div class="card">
+                <h3>☁️ 3. Portafolio Grupal</h3>
+                <span class="label que">Qué es</span>
+                <p>Una carpeta compartida en la nube donde el equipo guarda todas las evidencias del proceso: fuentes, datos, borradores y la versión final. Permite ver cómo mejoró el trabajo.</p>
+
+                <span class="label como">Cómo se hace</span>
+                <ol class="how-list">
+                    <li>Crear una carpeta compartida (Google Drive, OneDrive o Teams) y darle permiso de edición al equipo y al docente.</li>
+                    <li>Organizarla en subcarpetas numeradas según los pasos de la secuencia.</li>
+                    <li>Nombrar los archivos con <em>equipo_tema_versión</em> para no perder los borradores.</li>
+                    <li>Escribir cada semana una reflexión corta en la bitácora: qué hicimos, qué aprendimos y qué sigue.</li>
+                </ol>
+
+                <span class="label hecho">Ejemplo hecho</span>
+                <div class="mock">
+                    <div class="mock-bar">☁️ Carpeta compartida “9B_Equipo3_Polinizadores”</div>
+<div class="folder-tree">📁 9B_Equipo3_Polinizadores
+ ├── 📁 01_Reto
+ │    └── 📄 ficha_reto_quien_poliniza.pdf
+ ├── 📁 02_Investigacion
+ │    ├── 📄 E3_fuentes_v2.docx        <span class="note">← 3 fichas de fuentes</span>
+ │    ├── 📊 E3_conteo_visitas_v1.xlsx  <span class="note">← datos parcelas A y B</span>
+ │    └── 📄 actas_reuniones.docx
+ ├── 📁 03_Producto
+ │    ├── 🖼️ E3_infografia_v1_boceto.png
+ │    ├── 🖼️ E3_infografia_v2.png
+ │    └── 🖼️ E3_infografia_FINAL.png   <span class="note">← tras la coevaluación</span>
+ ├── 📁 04_Evaluacion
+ │    ├── 📄 rubrica_coevaluacion_E1.pdf
+ │    └── 📄 registro_de_mejora.docx
+ └── 📄 bitacora_semanal.docx</div>
+                    <div class="feedback" style="margin-top:10px;"><strong>Entrada de bitácora – Semana 2:</strong> Hicimos el conteo de visitas y vimos que el abejorro exótico domina la parcela B. Aprendimos a calcular porcentajes para comparar. Lo que sigue: pasar los datos a una gráfica para la infografía.</div>
+                </div>
+            </div>
+
+            <!-- EVALUACIÓN -->
+            <div class="card">
+                <h3>⭐ 4. Evaluación Formativa</h3>
+                <span class="label que">Qué es</span>
+                <p>Una evaluación que acompaña el proceso con criterios de calidad conocidos desde el inicio. Combina autoevaluación, coevaluación entre equipos y retroalimentación del docente para mejorar antes de la entrega final.</p>
+
+                <span class="label como">Cómo se hace</span>
+                <ol class="how-list">
+                    <li>Compartir la rúbrica desde la semana 1 para que todos sepan qué se espera.</li>
+                    <li>En la semana 3, cada equipo se autoevalúa con la rúbrica sobre su borrador.</li>
+                    <li>En la semana 4, otro equipo coevalúa y deja “2 estrellas y 1 deseo”.</li>
+                    <li>El docente revisa, da su nivel y el equipo registra las mejoras.</li>
+                </ol>
+
+                <span class="label hecho">Ejemplo hecho</span>
+                <div class="mock">
+                    <div class="mock-bar">⭐ Rúbrica aplicada al Equipo 3 (la marca ✔ indica el nivel alcanzado)</div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <tr><th>Criterio</th><th>1 – En inicio</th><th>2 – En proceso</th><th>3 – Logrado</th><th>4 – Destacado</th></tr>
+                            <tr><td><strong>Uso de evidencia científica</strong></td><td>No usa datos.</td><td>Usa un dato sin fuente.</td><td>Usa datos con fuente.</td><td>✔ Usa datos propios y fuentes, y los compara.</td></tr>
+                            <tr><td><strong>Explicación de interacciones</strong></td><td>Las nombra.</td><td>Las define.</td><td>Las define con ejemplos.</td><td>✔ Explica con signos (+/−) cómo se afectan entre sí.</td></tr>
+                            <tr><td><strong>Propuesta de acción</strong></td><td>No hay.</td><td>Es general.</td><td>✔ Es concreta y viable.</td><td>Es concreta, viable y medible.</td></tr>
+                            <tr><td><strong>Trabajo en equipo</strong></td><td>Un integrante hace casi todo.</td><td>Roles poco claros.</td><td>Roles cumplidos.</td><td>✔ Roles cumplidos y evidencias en Kanban y portafolio.</td></tr>
+                        </table>
+                    </div>
+                    <div class="feedback"><strong>Autoevaluación del equipo:</strong> “Nos pusimos 3 en evidencia porque nos faltaba un dato de depredación. Después de agregarlo subimos a 4.”</div>
+                    <div class="feedback"><strong>Retroalimentación docente:</strong> “Excelente comparación de parcelas. Para llegar a 4 en la propuesta, indiquen cómo medirán si las franjas de flores funcionan (por ejemplo, repetir el conteo en 3 meses).”</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 4: MINIJUEGO DESAFIANTE -->
+        <div id="tab-juego" class="tab-content">
+            <div class="card game-container">
+                <h3>🐝 La Abeja Nativa: Supervivencia en el Bosque</h3>
+                <p>Recolecta polen de las flores, <strong>llévalo a tu colmena</strong> y completa la meta de cada nivel antes de que acabe el tiempo. Compite con otros insectos por las flores y huye de los depredadores. ¡Cada nivel es más difícil!</p>
+                <p style="font-size:0.85rem;">🎮 Mover: <strong>flechas o W A S D</strong> • En celular o con mouse: <strong>mantén presionado</strong> donde quieres volar • Pausa: <strong>P</strong></p>
+
+                <div class="game-stats">
+                    <div>Nivel: <span id="level">1</span>/6</div>
+                    <div>⏱️ <span id="time">0</span> s</div>
+                    <div>🍯 Colmena: <span id="delivered">0</span>/<span id="goal">0</span></div>
+                    <div>🎒 Carga: <span id="carry">0</span>/6</div>
+                    <div>❤️ <span id="lives">3</span></div>
+                    <div>⚡ <span class="energy-track"><span class="energy-fill" id="energy"></span></span></div>
+                    <div>⭐ <span id="score">0</span></div>
+                </div>
+
+                <div class="game-stage">
+                    <canvas id="gameCanvas" width="720" height="420"></canvas>
+                    <div class="overlay" id="overlay">
+                        <div class="overlay-box">
+                            <h4 id="ov-title"></h4>
+                            <div id="ov-body"></div>
+                            <div class="ov-buttons" id="ov-buttons"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="eco-stats">
+                    <div><span class="sign mut">+ / +</span> Flores polinizadas: <strong id="st-poll">0</strong></div>
+                    <div><span class="sign comp">− / −</span> Polen perdido por competencia: <strong id="st-comp">0</strong></div>
+                    <div><span class="sign dep">+ / −</span> Escapes de depredadores: <strong id="st-esc">0</strong></div>
+                </div>
+
+                <div class="legend">
+                    <div><strong style="color:#86efac;">🌸 Mutualismo (+/+)</strong>Al llevar polen de una flor a <em>otra distinta</em> la polinizas. Cada 2 polinizaciones nace una flor nueva: ¡la planta también gana!</div>
+                    <div><strong style="color:#fcd34d;">🐝 Competencia (−/−)</strong>Abejorros y moscas rivales vacían las flores. Si te chocan te quitan polen. El abejorro exótico (rojo) es más rápido.</div>
+                    <div><strong style="color:#fca5a5;">🐦 Depredación (+/−)</strong>El pájaro te persigue, la araña espera en su telaraña y la mantis se esconde en algunas flores (mira sus ojos 👀). La colmena es zona segura.</div>
+                </div>
+                <p style="font-size:0.8rem; margin-top:12px;">Consejo: mientras más polen cargas, más lenta vuelas. ¿Arriesgas un viaje largo o vuelves pronto a la colmena?</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de Pestañas
+        function switchTab(evt, tabName) {
+            let contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("active");
+            }
+            let buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            if (tabName !== "tab-juego" && state === "playing") pauseGame();
+        }
+
+        // ===== Minijuego de Interacciones Biológicas =====
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const W = canvas.width, H = canvas.height;
+        const HIVE = { x: 52, y: H / 2, r: 42 };
+        const CAPACITY = 6;
+        const BEE_SPEED = 215;
+
+        // Configuración de niveles: cada uno añade presión ecológica
+        const LEVELS = [
+            {
+                name: "Pradera en flor", goal: 8, time: 70, flowers: 7, regen: 3.5,
+                competitors: 1, invasive: 0, birds: 0, birdSpeed: 0, webs: 0, mantis: 0,
+                intro: "Aprende a volar: recoge polen de varias flores y llévalo a la colmena. Un abejorro nativo también busca alimento.",
+                fact: "Mutualismo: la abeja obtiene alimento y la planta es polinizada. Al visitar flores distintas transportas polen entre ellas."
+            },
+            {
+                name: "Más competidores", goal: 12, time: 70, flowers: 7, regen: 4,
+                competitors: 3, invasive: 0, birds: 0, birdSpeed: 0, webs: 1, mantis: 0,
+                intro: "Llegan más insectos que comen lo mismo que tú y aparece una telaraña. Si caes en ella, ¡escapa rápido!",
+                fact: "Competencia interespecífica: cuando dos especies usan el mismo recurso limitado, ambas obtienen menos (−/−)."
+            },
+            {
+                name: "El pájaro acecha", goal: 14, time: 75, flowers: 7, regen: 4,
+                competitors: 3, invasive: 0, birds: 1, birdSpeed: 120, webs: 1, mantis: 0,
+                intro: "Un pájaro insectívoro patrulla el bosque y te persigue si te ve. Esquívalo hasta que se canse o refúgiate en la colmena.",
+                fact: "Depredación (+/−): el depredador gana alimento y la presa pierde la vida. Los depredadores regulan el tamaño de las poblaciones."
+            },
+            {
+                name: "Mantis escondidas", goal: 16, time: 80, flowers: 8, regen: 4.5,
+                competitors: 4, invasive: 0, birds: 1, birdSpeed: 135, webs: 2, mantis: 0.25,
+                intro: "Algunas flores esconden una mantis que caza por emboscada. Fíjate en los ojos 👀 antes de posarte.",
+                fact: "Las mantis y arañas cangrejo usan camuflaje: se parecen a la flor para cazar a los polinizadores que la visitan."
+            },
+            {
+                name: "Especie invasora", goal: 16, time: 85, flowers: 8, regen: 4.5,
+                competitors: 3, invasive: 3, birds: 2, birdSpeed: 125, webs: 2, mantis: 0.3,
+                intro: "Escaparon abejorros exóticos (rojos): más rápidos y agresivos. Vacían las flores y te roban polen. ¡Dos pájaros cazan!",
+                fact: "Una especie invasora sin depredadores naturales puede desplazar a las nativas por competencia y romper mutualismos antiguos."
+            },
+            {
+                name: "Temporada seca", goal: 18, time: 90, flowers: 6, regen: 6,
+                competitors: 2, invasive: 3, birds: 2, birdSpeed: 135, webs: 3, mantis: 0.35,
+                intro: "La sequía reduce las flores y tardan más en producir polen. Cada polinización cuenta para que el bosque se recupere.",
+                fact: "Cuando el recurso escasea, la competencia se intensifica. Proteger flores nativas ayuda a que sobrevivan los polinizadores."
+            }
+        ];
+
+        const COMP_STYLES = [
+            { body: "#a16207", stripe: "#1c1917", name: "Abejorro nativo" },
+            { body: "#94a3b8", stripe: "#334155", name: "Mosca de las flores" },
+            { body: "#78716c", stripe: "#facc15", name: "Abeja silvestre" }
+        ];
+
+        let state = "menu"; // menu | intro | playing | paused | levelEnd | over | won
+        let levelIndex = 0;
+        let cfg = LEVELS[0];
+        let bee, flowers, competitors, birds, webs, popups;
+        let lives, score, timeLeft, delivered, energy;
+        let stats = { poll: 0, comp: 0, esc: 0 };
+        let levelStartScore = 0;
+        let lastTime = 0;
+        let shake = 0;
+        let bestLevel = Number(localStorage.getItem("abejaMejorNivel") || 0);
+
+        const keys = {};
+        const pointer = { active: false, x: 0, y: 0 };
+
+        // ---------- Utilidades ----------
+        const rand = (a, b) => a + Math.random() * (b - a);
+        const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+        const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+        function freeSpot(minGap) {
+            for (let tries = 0; tries < 60; tries++) {
+                const p = { x: rand(140, W - 30), y: rand(40, H - 30) };
+                const others = [...(flowers || []), ...(webs || [])];
+                if (others.every(o => dist(o, p) > (o.r ? o.r + 30 : minGap))) return p;
+            }
+            return { x: rand(140, W - 30), y: rand(40, H - 30) };
+        }
+
+        function addPopup(x, y, text, color) {
+            popups.push({ x, y, text, color, t: 1.3 });
+        }
+
+        function makeFlower(sprout) {
+            const p = freeSpot(55);
+            const palette = ["#f472b6", "#c084fc", "#fb923c", "#f87171", "#facc15", "#60a5fa"];
+            return {
+                x: p.x, y: p.y, pollen: sprout ? 1 : 3, max: 3, regenT: 0,
+                color: palette[Math.floor(Math.random() * palette.length)],
+                pollinations: 0, mantis: Math.random() < cfg.mantis, mantisT: 0,
+                grow: sprout ? 0 : 1, sway: Math.random() * 6
+            };
+        }
+
+        // ---------- Inicio de niveles ----------
+        function setupLevel() {
+            cfg = LEVELS[levelIndex];
+            bee = { x: HIVE.x + 10, y: HIVE.y, vx: 0, vy: 0, carry: 0, invuln: 0, collectT: 0,
+                    lastFlower: null, webT: 0, stealCd: 0, angle: 0 };
+            flowers = []; webs = []; popups = [];
+            for (let i = 0; i < cfg.webs; i++) {
+                const p = freeSpot(80);
+                webs.push({ x: clamp(p.x, 200, W - 60), y: clamp(p.y, 60, H - 60), r: 34 });
+            }
+            for (let i = 0; i < cfg.flowers; i++) flowers.push(makeFlower(false));
+
+            competitors = [];
+            for (let i = 0; i < cfg.competitors; i++) {
+                const s = COMP_STYLES[i % COMP_STYLES.length];
+                competitors.push(makeCompetitor(s.body, s.stripe, 75 + levelIndex * 6, false));
+            }
+            for (let i = 0; i < cfg.invasive; i++) {
+                competitors.push(makeCompetitor("#dc2626", "#111827", 120 + levelIndex * 6, true));
+            }
+
+            birds = [];
+            for (let i = 0; i < cfg.birds; i++) {
+                birds.push({ x: rand(W * 0.5, W - 40), y: rand(40, H - 40), angle: Math.PI,
+                             state: "patrol", t: rand(1, 2), wp: { x: rand(200, W - 40), y: rand(40, H - 40) } });
+            }
+
+            lives = 3;
+            energy = 100;
+            delivered = 0;
+            timeLeft = cfg.time;
+            levelStartScore = score;
+            stats = { poll: 0, comp: 0, esc: 0 };
+            updateHUD();
+        }
+
+        function makeCompetitor(body, stripe, speed, invasive) {
+            return { x: rand(W * 0.6, W - 20), y: rand(30, H - 30), target: null, drainT: 0, drained: 0,
+                     speed: speed, body, stripe, invasive, wobble: Math.random() * 6, bumpCd: 0, angle: 0 };
+        }
+
+        // ---------- Pantallas superpuestas ----------
+        const overlay = document.getElementById("overlay");
+        function showOverlay(title, html, buttons) {
+            document.getElementById("ov-title").innerHTML = title;
+            document.getElementById("ov-body").innerHTML = html;
+            const box = document.getElementById("ov-buttons");
+            box.innerHTML = "";
+            buttons.forEach(b => {
+                const btn = document.createElement("button");
+                btn.className = "game-btn" + (b.secondary ? " secondary" : "");
+                btn.textContent = b.label;
+                btn.onclick = b.fn;
+                box.appendChild(btn);
+            });
+            overlay.classList.remove("hidden");
+        }
+        function hideOverlay() { overlay.classList.add("hidden"); }
+
+        function showMenu() {
+            state = "menu";
+            showOverlay("🐝 La Abeja Nativa",
+                `<p>Eres una abeja nativa del bosque andino. Tu colonia necesita polen para sobrevivir.</p>
+                 <ul>
+                   <li>Vuela sobre una flor para recolectar polen (máximo ${CAPACITY}).</li>
+                   <li>Entra a la colmena 🍯 para guardarlo, recargar energía y estar a salvo.</li>
+                   <li>Completa la meta antes de que se acabe el tiempo. Tienes 3 vidas por nivel.</li>
+                   <li>Tu energía baja al volar: el néctar de las flores y la colmena la recargan.</li>
+                 </ul>
+                 <p>6 niveles: cada uno suma competidores, depredadores y menos recursos.</p>
+                 ${bestLevel ? `<p>🏆 Tu mejor marca: nivel ${bestLevel} superado.</p>` : ""}`,
+                [{ label: "Comenzar nivel 1", fn: () => { levelIndex = 0; score = 0; showIntro(); } }]);
+        }
+
+        function showIntro() {
+            setupLevel();
+            state = "intro";
+            draw();
+            showOverlay(`Nivel ${levelIndex + 1}: ${cfg.name}`,
+                `<p>${cfg.intro}</p>
+                 <p>🎯 Meta: <strong>${cfg.goal} polen</strong> en la colmena • ⏱️ ${cfg.time} s</p>
+                 <p>🌸 Flores: ${cfg.flowers} • 🐝 Competidores: ${cfg.competitors + cfg.invasive} • 🐦 Pájaros: ${cfg.birds} • 🕸️ Telarañas: ${cfg.webs}${cfg.mantis ? " • 👀 Mantis ocultas" : ""}</p>`,
+                [{ label: "¡A volar!", fn: resumeGame }]);
+        }
+
+        function resumeGame() {
+            hideOverlay();
+            state = "playing";
+            lastTime = performance.now();
+            requestAnimationFrame(loop);
+        }
+
+        function pauseGame() {
+            if (state !== "playing") return;
+            state = "paused";
+            showOverlay("⏸️ Pausa", "<p>El bosque te espera.</p>",
+                [{ label: "Continuar", fn: resumeGame },
+                 { label: "Reiniciar nivel", secondary: true, fn: () => { score = levelStartScore; showIntro(); } }]);
+        }
+
+        function levelComplete() {
+            state = "levelEnd";
+            const bonus = Math.ceil(timeLeft) * 2 + lives * 20;
+            score += bonus;
+            bestLevel = Math.max(bestLevel, levelIndex + 1);
+            localStorage.setItem("abejaMejorNivel", bestLevel);
+            updateHUD();
+            const summary = `<p>✅ Guardaste <strong>${delivered}</strong> de polen. Bonificación por tiempo y vidas: +${bonus}</p>
+                 <p><span class="sign mut">+/+</span> Polinizaste ${stats.poll} flores • <span class="sign comp">−/−</span> Perdiste ${stats.comp} de polen por competencia • <span class="sign dep">+/−</span> Escapaste ${stats.esc} veces</p>
+                 <div class="ov-fact">📘 ${cfg.fact}</div>`;
+            if (levelIndex === LEVELS.length - 1) {
+                state = "won";
+                showOverlay("🏆 ¡La colonia sobrevivió!",
+                    summary + `<p>Puntuación final: <strong>${score}</strong></p>
+                    <p>Demostraste que la supervivencia depende del equilibrio entre mutualismo, competencia y depredación.</p>`,
+                    [{ label: "Jugar de nuevo", fn: showMenu }]);
+            } else {
+                showOverlay(`🎉 ¡Nivel ${levelIndex + 1} superado!`, summary,
+                    [{ label: `Ir al nivel ${levelIndex + 2}`, fn: () => { levelIndex++; showIntro(); } }]);
+            }
+        }
+
+        function levelFailed(reason) {
+            state = "over";
+            showOverlay("💀 La colonia está en peligro",
+                `<p>${reason}</p>
+                 <p>Llegaste a ${delivered}/${cfg.goal} de polen en el nivel ${levelIndex + 1}.</p>
+                 <div class="ov-fact">📘 ${cfg.fact}</div>`,
+                [{ label: "Reintentar nivel", fn: () => { score = levelStartScore; showIntro(); } },
+                 { label: "Volver al inicio", secondary: true, fn: showMenu }]);
+        }
+
+        // ---------- Daño a la abeja ----------
+        function hurt(message) {
+            if (bee.invuln > 0) return;
+            lives--;
+            if (bee.carry > 0) addPopup(bee.x, bee.y - 30, `Perdiste ${bee.carry} de polen`, "#fca5a5");
+            bee.carry = 0;
+            bee.invuln = 2;
+            bee.webT = 0;
+            shake = 0.35;
+            addPopup(bee.x, bee.y - 14, message, "#f87171");
+            if (lives <= 0) {
+                updateHUD();
+                levelFailed(message + " Te quedaste sin vidas.");
+            }
+        }
+
+        // ---------- Actualización ----------
+        function update(dt) {
+            timeLeft -= dt;
+            if (timeLeft <= 0) { timeLeft = 0; levelFailed("Se acabó el tiempo: la colmena no reunió suficiente polen."); return; }
+
+            // Movimiento de la abeja
+            let ax = 0, ay = 0;
+            if (keys.ArrowLeft || keys.KeyA) ax -= 1;
+            if (keys.ArrowRight || keys.KeyD) ax += 1;
+            if (keys.ArrowUp || keys.KeyW) ay -= 1;
+            if (keys.ArrowDown || keys.KeyS) ay += 1;
+            if (pointer.active) {
+                const dx = pointer.x - bee.x, dy = pointer.y - bee.y, d = Math.hypot(dx, dy);
+                if (d > 6) { const k = Math.min(1, d / 50); ax = dx / d * k; ay = dy / d * k; }
+            }
+            const mag = Math.hypot(ax, ay);
+            if (mag > 1) { ax /= mag; ay /= mag; }
+
+            const inWeb = webs.some(w => dist(w, bee) < w.r);
+            let maxSpeed = BEE_SPEED * (1 - 0.07 * bee.carry);
+            if (inWeb) maxSpeed *= 0.3;
+            if (energy < 20) maxSpeed *= 0.7;
+            const accel = Math.min(1, dt * 8);
+            bee.vx += (ax * maxSpeed - bee.vx) * accel;
+            bee.vy += (ay * maxSpeed - bee.vy) * accel;
+            bee.x = clamp(bee.x + bee.vx * dt, 14, W - 14);
+            bee.y = clamp(bee.y + bee.vy * dt, 14, H - 14);
+            if (Math.abs(bee.vx) > 5) bee.angle = bee.vx < 0 ? -1 : 1;
+
+            if (bee.invuln > 0) bee.invuln -= dt;
+            if (bee.stealCd > 0) bee.stealCd -= dt;
+
+            // Energía
+            const moving = Math.hypot(bee.vx, bee.vy) > 20;
+            energy -= dt * (moving ? 3.2 : 1.8) * (1 + levelIndex * 0.08);
+            const inHive = dist(bee, HIVE) < HIVE.r;
+            if (inHive) {
+                energy = Math.min(100, energy + dt * 30);
+                if (bee.carry > 0) {
+                    delivered += bee.carry;
+                    score += bee.carry * 10;
+                    addPopup(HIVE.x + 20, HIVE.y - 40, `+${bee.carry} 🍯`, "#fde047");
+                    bee.carry = 0;
+                    if (delivered >= cfg.goal) { updateHUD(); levelComplete(); return; }
+                }
+            }
+            if (energy <= 0) { energy = 60; hurt("¡Sin energía!"); if (state !== "playing") return; }
+
+            // Telaraña: si te quedas atrapada, la araña te caza
+            if (inWeb && bee.invuln <= 0) {
+                bee.webT += dt;
+                if (bee.webT > 1.1) { hurt("¡La araña te atrapó!"); if (state !== "playing") return; }
+            } else {
+                bee.webT = Math.max(0, bee.webT - dt * 2);
+            }
+
+            // Flores: recolección, polinización (mutualismo) y mantis
+            let onFlower = null;
+            for (const f of flowers) {
+                if (f.grow < 1) f.grow = Math.min(1, f.grow + dt * 0.8);
+                if (f.pollen < f.max) {
+                    f.regenT += dt;
+                    if (f.regenT > cfg.regen) { f.pollen++; f.regenT = 0; }
+                }
+                if (dist(f, bee) < 22) onFlower = f;
+                if (f.mantis && dist(f, bee) >= 22) f.mantisT = Math.max(0, f.mantisT - dt);
+            }
+            if (onFlower) {
+                if (onFlower.mantis && bee.invuln <= 0) {
+                    onFlower.mantisT += dt;
+                    if (onFlower.mantisT > 0.55) {
+                        onFlower.mantis = false;
+                        onFlower.mantisT = 0;
+                        hurt("¡Una mantis te emboscó!");
+                        // La mantis se cambia de flor
+                        const lvl = levelIndex;
+                        setTimeout(() => { if (lvl === levelIndex && flowers.length) flowers[Math.floor(Math.random() * flowers.length)].mantis = true; }, 4000);
+                        if (state !== "playing") return;
+                    }
+                }
+                if (onFlower.pollen > 0 && bee.carry < CAPACITY) {
+                    bee.collectT += dt;
+                    if (bee.collectT > 0.3) {
+                        bee.collectT = 0;
+                        onFlower.pollen--;
+                        bee.carry++;
+                        energy = Math.min(100, energy + 9);
+                        score += 2;
+                        if (bee.lastFlower && bee.lastFlower !== onFlower) {
+                            onFlower.pollinations++;
+                            stats.poll++;
+                            score += 5;
+                            addPopup(onFlower.x, onFlower.y - 24, "+/+ ¡Polinizada!", "#86efac");
+                            if (onFlower.pollinations % 2 === 0 && flowers.length < cfg.flowers + 4) {
+                                const nf = makeFlower(true);
+                                nf.mantis = false;
+                                flowers.push(nf);
+                                addPopup(nf.x, nf.y - 20, "🌱 Nueva flor", "#86efac");
+                            }
+                        } else {
+                            addPopup(onFlower.x, onFlower.y - 24, "+1 polen", "#fde047");
+                        }
+                        bee.lastFlower = onFlower;
+                    }
+                }
+            } else {
+                bee.collectT = 0;
+            }
+
+            // Competidores: buscan la flor con polen más cercana y la vacían
+            for (const c of competitors) {
+                c.wobble += dt * 6;
+                if (c.bumpCd > 0) c.bumpCd -= dt;
+                if (!c.target || c.target.pollen <= 0 || c.drained >= 2) {
+                    c.drained = 0;
+                    const options = flowers.filter(f => f.pollen > 0 && f.grow >= 1);
+                    if (options.length) {
+                        options.sort((a, b) => dist(a, c) - dist(b, c));
+                        c.target = options[Math.floor(Math.random() * Math.min(2, options.length))];
+                    } else {
+                        c.target = null;
+                    }
+                }
+                let tx, ty;
+                // El exótico persigue a la abeja cuando carga polen y está cerca
+                if (c.invasive && bee.carry > 0 && dist(c, bee) < 110 && !inHive) {
+                    tx = bee.x; ty = bee.y;
+                } else if (c.target) {
+                    tx = c.target.x; ty = c.target.y - 4;
+                } else {
+                    tx = W * 0.6 + Math.cos(c.wobble * 0.2) * 150; ty = H / 2 + Math.sin(c.wobble * 0.3) * 120;
+                }
+                const dx = tx - c.x, dy = ty - c.y, d = Math.hypot(dx, dy);
+                if (d > 4) {
+                    c.x += dx / d * c.speed * dt;
+                    c.y += dy / d * c.speed * dt + Math.sin(c.wobble) * 0.6;
+                    c.angle = dx < 0 ? -1 : 1;
+                }
+                if (dist(c, HIVE) < HIVE.r + 15) {
+                    const a = Math.atan2(c.y - HIVE.y, c.x - HIVE.x);
+                    c.x = HIVE.x + Math.cos(a) * (HIVE.r + 15); c.y = HIVE.y + Math.sin(a) * (HIVE.r + 15);
+                }
+                if (c.target && dist(c, c.target) < 14) {
+                    c.drainT += dt;
+                    if (c.drainT > (c.invasive ? 0.45 : 0.75)) {
+                        c.drainT = 0;
+                        if (c.target.pollen > 0) {
+                            c.target.pollen--;
+                            c.drained++;
+                            addPopup(c.target.x, c.target.y - 20, "−1", "#fcd34d");
+                        }
+                    }
+                }
+                // Choque con la abeja: competencia por interferencia
+                if (dist(c, bee) < 20 && c.bumpCd <= 0 && !inHive) {
+                    c.bumpCd = 1.2;
+                    const a = Math.atan2(bee.y - c.y, bee.x - c.x);
+                    bee.vx += Math.cos(a) * 180; bee.vy += Math.sin(a) * 180;
+                    if (bee.carry > 0 && bee.stealCd <= 0) {
+                        const lost = c.invasive ? Math.min(2, bee.carry) : 1;
+                        bee.carry -= lost;
+                        stats.comp += lost;
+                        bee.stealCd = 0.8;
+                        addPopup(bee.x, bee.y - 20, `−/− Te robaron ${lost}`, "#fcd34d");
+                    }
+                }
+            }
+
+            // Pájaros depredadores: patrullan, persiguen y se cansan
+            for (const b of birds) {
+                const dBee = dist(b, bee);
+                let speed = cfg.birdSpeed, turn = 2.4, desired;
+                if (b.state === "patrol") {
+                    speed *= 0.55;
+                    if (dist(b, b.wp) < 20) b.wp = { x: rand(200, W - 40), y: rand(40, H - 40) };
+                    desired = Math.atan2(b.wp.y - b.y, b.wp.x - b.x);
+                    if (dBee < 210 && !inHive && bee.invuln <= 0 && !birds.some(o => o.state === "chase")) { b.state = "chase"; b.t = 2.8; addPopup(b.x, b.y - 22, "¡Te vio!", "#fca5a5"); }
+                } else if (b.state === "chase") {
+                    desired = Math.atan2(bee.y - b.y, bee.x - b.x);
+                    b.t -= dt;
+                    if (inHive || bee.invuln > 0 || b.t <= 0) {
+                        if (bee.invuln <= 0) { stats.esc++; score += 8; addPopup(bee.x, bee.y - 26, "+/− ¡Escapaste!", "#86efac"); }
+                        b.state = "rest"; b.t = 2.4;
+                    }
+                } else {
+                    speed *= 0.3;
+                    desired = b.angle;
+                    b.t -= dt;
+                    if (b.t <= 0) { b.state = "patrol"; b.wp = { x: rand(200, W - 40), y: rand(40, H - 40) }; }
+                }
+                let diff = Math.atan2(Math.sin(desired - b.angle), Math.cos(desired - b.angle));
+                b.angle += clamp(diff, -turn * dt, turn * dt);
+                b.x += Math.cos(b.angle) * speed * dt;
+                b.y += Math.sin(b.angle) * speed * dt;
+                b.x = clamp(b.x, 20, W - 20); b.y = clamp(b.y, 20, H - 20);
+                if (dist(b, HIVE) < HIVE.r + 30) {
+                    const a = Math.atan2(b.y - HIVE.y, b.x - HIVE.x);
+                    b.x = HIVE.x + Math.cos(a) * (HIVE.r + 30); b.y = HIVE.y + Math.sin(a) * (HIVE.r + 30);
+                }
+                if (dBee < 22 && b.state === "chase" && bee.invuln <= 0) {
+                    hurt("¡Un pájaro te cazó!");
+                    b.state = "rest"; b.t = 2.5;
+                    if (state !== "playing") return;
+                }
+            }
+
+            for (const p of popups) { p.t -= dt; p.y -= dt * 28; }
+            popups = popups.filter(p => p.t > 0);
+            if (shake > 0) shake -= dt;
+        }
+
+        // ---------- Dibujo ----------
+        function drawBee(x, y, body, stripe, dir, scale, alpha) {
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.translate(x, y);
+            ctx.scale(dir * scale, scale);
+            const flap = Math.sin(performance.now() / 40) * 0.5;
+            ctx.fillStyle = "rgba(224,242,254,0.8)";
+            ctx.beginPath(); ctx.ellipse(-2, -9, 6, 9 + flap * 3, -0.4, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.ellipse(4, -9, 5, 8 - flap * 3, 0.4, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = body;
+            ctx.beginPath(); ctx.ellipse(0, 0, 13, 9, 0, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = stripe;
+            ctx.fillRect(-5, -8, 3.5, 16); ctx.fillRect(1, -8.5, 3.5, 17);
+            ctx.beginPath(); ctx.arc(11, -1, 5, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "#fff";
+            ctx.beginPath(); ctx.arc(12.5, -2.5, 1.6, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = stripe;
+            ctx.beginPath(); ctx.moveTo(-13, 0); ctx.lineTo(-18, 0); ctx.lineTo(-13, 3); ctx.fill();
+            ctx.restore();
+        }
+
+        function drawFlower(f) {
+            const s = 0.4 + 0.6 * f.grow;
+            const sw = Math.sin(performance.now() / 700 + f.sway) * 1.5;
+            ctx.save();
+            ctx.translate(f.x + sw, f.y);
+            ctx.strokeStyle = "#15803d"; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(0, 6); ctx.lineTo(-sw, 26 * s); ctx.stroke();
+            ctx.scale(s, s);
+            const empty = f.pollen === 0;
+            ctx.fillStyle = empty ? "#64748b" : f.color;
+            for (let i = 0; i < 6; i++) {
+                const a = i * Math.PI / 3;
+                ctx.beginPath(); ctx.ellipse(Math.cos(a) * 10, Math.sin(a) * 10, 8, 5, a, 0, Math.PI * 2); ctx.fill();
+            }
+            ctx.fillStyle = empty ? "#475569" : "#fde047";
+            ctx.beginPath(); ctx.arc(0, 0, 7, 0, Math.PI * 2); ctx.fill();
+            // Puntos de polen disponibles
+            for (let i = 0; i < f.pollen; i++) {
+                ctx.fillStyle = "#ca8a04";
+                ctx.beginPath(); ctx.arc(-5 + i * 5, 0, 1.8, 0, Math.PI * 2); ctx.fill();
+            }
+            if (f.mantis) {
+                const blink = (Math.sin(performance.now() / 260 + f.sway) + 1) / 2;
+                ctx.globalAlpha = 0.45 + blink * 0.5;
+                ctx.fillStyle = "#22c55e";
+                ctx.beginPath(); ctx.moveTo(-9, -14); ctx.lineTo(9, -14); ctx.lineTo(0, -4); ctx.fill();
+                ctx.fillStyle = "#facc15";
+                ctx.beginPath(); ctx.arc(-5, -12, 2.6, 0, Math.PI * 2); ctx.arc(5, -12, 2.6, 0, Math.PI * 2); ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+            ctx.restore();
+            if (f.mantisT > 0) {
+                ctx.fillStyle = "#ef4444"; ctx.font = "bold 14px Arial"; ctx.textAlign = "center";
+                ctx.fillText("¡!", f.x, f.y - 26);
+            }
+        }
+
+        function drawWeb(w) {
+            ctx.save();
+            ctx.strokeStyle = "rgba(226,232,240,0.55)"; ctx.lineWidth = 1;
+            for (let i = 0; i < 8; i++) {
+                const a = i * Math.PI / 4;
+                ctx.beginPath(); ctx.moveTo(w.x, w.y); ctx.lineTo(w.x + Math.cos(a) * w.r, w.y + Math.sin(a) * w.r); ctx.stroke();
+            }
+            for (let r = 8; r <= w.r; r += 8) {
+                ctx.beginPath();
+                for (let i = 0; i <= 8; i++) {
+                    const a = i * Math.PI / 4;
+                    const px = w.x + Math.cos(a) * r, py = w.y + Math.sin(a) * r;
+                    i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+                }
+                ctx.stroke();
+            }
+            ctx.font = "18px Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            const near = dist(w, bee) < w.r;
+            ctx.fillText("🕷️", w.x + (near ? (bee.x - w.x) * 0.5 : 0), w.y - (near ? 0 : w.r - 4) + (near ? (bee.y - w.y) * 0.5 : 0));
+            ctx.restore();
+        }
+
+        function drawBird(b) {
+            ctx.save();
+            ctx.translate(b.x, b.y);
+            if (Math.cos(b.angle) > 0) ctx.scale(-1, 1);
+            ctx.font = "30px Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            ctx.fillText("🐦", 0, 0);
+            ctx.restore();
+            if (b.state === "chase") {
+                ctx.strokeStyle = "rgba(248,113,113,0.6)"; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.arc(b.x, b.y, 20, 0, Math.PI * 2 * Math.max(0, b.t / 2.8)); ctx.stroke();
+            } else if (b.state === "rest") {
+                ctx.fillStyle = "#cbd5e1"; ctx.font = "11px Arial"; ctx.textAlign = "center";
+                ctx.fillText("zzz", b.x + 12, b.y - 18);
+            }
+        }
+
+        function draw() {
+            ctx.save();
+            if (shake > 0) ctx.translate(rand(-4, 4), rand(-4, 4));
+
+            // Fondo del bosque
+            const g = ctx.createLinearGradient(0, 0, 0, H);
+            g.addColorStop(0, levelIndex === 5 ? "#3f3a24" : "#14532d");
+            g.addColorStop(1, levelIndex === 5 ? "#57472a" : "#1e3a2a");
+            ctx.fillStyle = g;
+            ctx.fillRect(-10, -10, W + 20, H + 20);
+            ctx.fillStyle = "rgba(255,255,255,0.03)";
+            for (let i = 0; i < 12; i++) {
+                ctx.beginPath(); ctx.arc((i * 137) % W, (i * 89) % H, 40 + (i % 3) * 20, 0, Math.PI * 2); ctx.fill();
+            }
+
+            // Colmena (zona segura)
+            ctx.fillStyle = "rgba(253,224,71,0.12)";
+            ctx.beginPath(); ctx.arc(HIVE.x, HIVE.y, HIVE.r, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = "rgba(253,224,71,0.5)"; ctx.setLineDash([5, 5]);
+            ctx.stroke(); ctx.setLineDash([]);
+            ctx.font = "34px Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            ctx.fillText("🍯", HIVE.x, HIVE.y);
+            ctx.fillStyle = "#fde047"; ctx.font = "bold 10px Arial";
+            ctx.fillText("COLMENA", HIVE.x, HIVE.y + 30);
+
+            if (flowers) {
+                webs.forEach(drawWeb);
+                flowers.forEach(drawFlower);
+                competitors.forEach(c => drawBee(c.x, c.y, c.body, c.stripe, c.angle || 1, c.invasive ? 1.15 : 0.95, 1));
+
+                // Abeja jugadora
+                const blink = bee.invuln > 0 && Math.floor(bee.invuln * 10) % 2 === 0;
+                drawBee(bee.x, bee.y, "#facc15", "#1c1917", bee.angle || 1, 1.1, blink ? 0.3 : 1);
+                if (bee.carry > 0) {
+                    for (let i = 0; i < bee.carry; i++) {
+                        ctx.fillStyle = "#fbbf24";
+                        ctx.beginPath(); ctx.arc(bee.x - 10 + i * 4, bee.y + 13, 2.5, 0, Math.PI * 2); ctx.fill();
+                    }
+                }
+                if (bee.webT > 0) {
+                    ctx.fillStyle = "#f87171"; ctx.fillRect(bee.x - 15, bee.y - 24, 30 * Math.min(1, bee.webT / 1.1), 4);
+                }
+
+                birds.forEach(drawBird);
+
+                for (const p of popups) {
+                    ctx.globalAlpha = Math.min(1, p.t);
+                    ctx.fillStyle = p.color; ctx.font = "bold 13px Arial"; ctx.textAlign = "center";
+                    ctx.fillText(p.text, p.x, p.y);
+                }
+                ctx.globalAlpha = 1;
+
+                if (timeLeft < 10 && state === "playing") {
+                    ctx.fillStyle = "rgba(239,68,68,0.9)"; ctx.font = "bold 20px Arial"; ctx.textAlign = "right";
+                    ctx.fillText(Math.ceil(timeLeft) + " s", W - 12, 20);
+                }
+            }
+            ctx.restore();
+        }
+
+        function updateHUD() {
+            document.getElementById("level").innerText = levelIndex + 1;
+            document.getElementById("time").innerText = Math.ceil(timeLeft || 0);
+            document.getElementById("delivered").innerText = delivered || 0;
+            document.getElementById("goal").innerText = cfg.goal;
+            document.getElementById("carry").innerText = bee ? bee.carry : 0;
+            document.getElementById("lives").innerText = Math.max(0, lives || 0);
+            document.getElementById("score").innerText = score || 0;
+            const e = document.getElementById("energy");
+            e.style.width = Math.max(0, energy || 0) + "%";
+            e.style.background = energy < 25 ? "#f87171" : energy < 50 ? "#facc15" : "#4ade80";
+            document.getElementById("st-poll").innerText = stats.poll;
+            document.getElementById("st-comp").innerText = stats.comp;
+            document.getElementById("st-esc").innerText = stats.esc;
+        }
+
+        function loop(now) {
+            if (state !== "playing") { draw(); return; }
+            const dt = Math.min(0.05, (now - lastTime) / 1000);
+            lastTime = now;
+            update(dt);
+            draw();
+            updateHUD();
+            if (state === "playing") requestAnimationFrame(loop);
+        }
+
+        // ---------- Controles ----------
+        document.addEventListener("keydown", e => {
+            const gameVisible = document.getElementById("tab-juego").classList.contains("active");
+            if (!gameVisible) return;
+            if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space"].includes(e.code) && (state === "playing" || state === "paused")) e.preventDefault();
+            if (e.code === "KeyP" || e.code === "Escape") {
+                if (state === "playing") pauseGame();
+                else if (state === "paused") resumeGame();
+                return;
+            }
+            keys[e.code] = true;
+        });
+        document.addEventListener("keyup", e => { keys[e.code] = false; });
+        window.addEventListener("blur", () => { for (const k in keys) keys[k] = false; pointer.active = false; });
+
+        function pointerPos(e) {
+            const r = canvas.getBoundingClientRect();
+            pointer.x = (e.clientX - r.left) * (W / r.width);
+            pointer.y = (e.clientY - r.top) * (H / r.height);
+        }
+        canvas.addEventListener("pointerdown", e => { pointer.active = true; pointerPos(e); canvas.setPointerCapture(e.pointerId); });
+        canvas.addEventListener("pointermove", e => { if (pointer.active) pointerPos(e); });
+        canvas.addEventListener("pointerup", () => { pointer.active = false; });
+        canvas.addEventListener("pointercancel", () => { pointer.active = false; });
+
+        // Pantalla inicial
+        cfg = LEVELS[0];
+        timeLeft = cfg.time;
+        updateHUD();
+        draw();
+        showMenu();
+    </script>
+
+</body>
+</html>
